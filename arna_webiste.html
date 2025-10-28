@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="ARNA: An LVLM-orchestrated framework for general-purpose robotic navigation in unknown environments (HM-EQA, RxR).">
+  <meta name="keywords" content="ARNA, LVLM, LLM, VLM, agent, agentic, LLM agent, LVLM agent, robotics, navigation, Habitat, HM-EQA, RxR, SISL">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>General-Purpose Robotic Navigation via LVLM-Orchestrated Perception, Reasoning, and Acting</title>
+
+  <!-- Nerfies-style includes -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/legged_robot.png">
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+
+  <style>
+    /* Typography */
+    :root { --abstract-indent: 1.5em; }
+    .content p { line-height: 1.8; text-indent: 0 !important; }
+    /* Abstract: fully-justified, hyphenation, balanced margins, nice measure */
+    #abs-block .content { text-align: justify; }
+    #abs-block .content p {
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+    }
+    #abs-block .column.is-four-fifths {
+      max-width: 120ch;            /* typographic line length */
+      margin-left: auto;          /* equal margins */
+      margin-right: auto;         /* equal margins */
+      padding-left: 0;            /* keep it crisp */
+      padding-right: 0;
+    }
+
+
+    /* Images: remove outline, make spacing ultra-tight */
+    .figure-frame {
+      width: 100%;
+      height: auto;
+      border: none;            /* no grey outline */
+      border-radius: 8px;      /* soft corners (optional) */
+      display: block;
+      margin: 0.1rem auto;     /* very tight vertical spacing */
+    }
+    /* Compact figure wrapper and caption */
+    .media-figure { margin: 0.2rem 0 !important; }
+    .figure-caption {
+      margin-top: 0.15rem;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: #6b7280;          /* neutral-600 */
+      text-align: center;
+      font-style: italic;
+    }
+    /* Sections that primarily contain images: squeeze padding further */
+    .image-section { padding-top: 0.4rem; padding-bottom: 0.4rem; }
+
+    /* Tighten columns around media blocks inside mixed sections */
+    .tight { margin-top: 0.15rem; margin-bottom: 0.15rem; }
+
+    /* Inline title icon sized to match the H1 font */
+    .title-icon {
+      height: 1em;             /* match font size */
+      width: auto;
+      vertical-align: -0.18em; /* baseline nudge */
+      margin-right: .5rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 1) Title & Authors (smaller margins) -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-11-desktop is-12-tablet has-text-centered">
+          <h1 class="title is-1 publication-title">
+            <img src="./static/images/legged_robot.png" alt="" class="title-icon" aria-hidden="true">
+            General-Purpose Robotic Navigation via LVLM-Orchestrated Perception, Reasoning, and Acting
+          </h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://web.stanford.edu/~blange/" target="_blank" rel="noopener">Bernard Lange</a><sup>†</sup>,</span>
+            <span class="author-block"><a href="https://www.linkedin.com/in/anilyildiz/" target="_blank" rel="noopener">Anil Yıldız</a><sup>†</sup>,</span>
+            <span class="author-block"><a href="https://mansurarief.github.io/" target="_blank" rel="noopener">Mansur Arief</a><sup>†</sup>,</span>
+            <span class="author-block"><a href="https://www.linkedin.com/in/shehryar-khattak/" target="_blank" rel="noopener">Shehryar Khattak</a><sup>‡</sup>,</span>
+            <span class="author-block"><a href="https://mykel.kochenderfer.com/" target="_blank" rel="noopener">Mykel J. Kochenderfer</a><sup>†</sup>,</span>
+            <span class="author-block"><a href="https://ggeorgak11.github.io/" target="_blank" rel="noopener">Georgios Georgakis</a><sup>‡</sup></span>
+          </div>
+          
+          <div class="publication-authors affiliations">
+            <span class="author-block"><sup>†</sup>Stanford University, Stanford Intelligent Systems Lab</span>
+            <span class="author-block"><sup>‡</sup>NASA Jet Propulsion Laboratory (JPL)</span>
+          </div>
+          
+
+          <div class="publication-links">
+            <span class="link-block">
+              <a href="https://arxiv.org/pdf/2506.17462" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+                <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="https://arxiv.org/abs/2506.17462" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+                <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
+              </a>
+            </span>
+            <!-- Video button -->
+            <span class="link-block">
+              <a href="https://www.youtube.com/watch?v=EENdVXrRQU8" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+                <span class="icon"><i class="fab fa-youtube"></i></span><span>Video</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                <span class="icon"><i class="fas fa-quote-right"></i></span><span>BibTeX</span>
+              </a>
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2) Comparison image (super-tight) -->
+<section class="section image-section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-11-desktop is-12-tablet">
+        <figure class="media-figure">
+          <img class="figure-frame" src="./static/images/arna-comp.png" alt="Comparison of traditional robotic stacks and prior work vs. ARNA">
+          <figcaption class="figure-caption">While classical robotic stacks (top left) and recent LVLM-based solutions (bottom left)
+            follow fixed pipelines,  <strong>ARNA</strong> (right) introduces a reasoning-driven agent that dynamically orchestrates perception, reasoning, and navigation tools to accomplish diverse, language-defined tasks.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3) Abstract (wider margins + first-line indent) -->
+<section class="section" id="abs-block">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3" id="abs">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Developing general-purpose navigation policies for unknown environments remains a core challenge in robotics. Most existing systems rely on task-specific neural networks and fixed data flows, limiting generalizability. Large Vision-Language Models (LVLMs) offer a promising alternative by embedding human-like knowledge suitable for reasoning and planning. Yet, prior LVLM-robot integrations typically depend on pre-mapped spaces, hard-coded representations, and myopic exploration. We introduce the Agentic Robotic Navigation Architecture (ARNA), a general-purpose navigation framework that equips an LVLM-based agent with a library of perception, reasoning, and navigation tools available within modern robotic stacks. At runtime, the agent autonomously defines and executes task-specific workflows that iteratively query the robotic modules, reason over multimodal inputs, and select appropriate navigation actions. This approach enables robust navigation and reasoning in previously unmapped environments, providing a new perspective on robotic stack design. Evaluated in Habitat Lab on the HM-EQA benchmark, ARNA achieves state-of-the-art performance, demonstrating effective exploration, navigation, and embodied question answering without relying on handcrafted plans, fixed input representations, or pre-existing maps.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4–5) Method (title before figure, then text) -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-11-desktop is-12-tablet">
+        <h2 class="title is-3" id="method">Agentic Robotic Navigation Architecture (ARNA)</h2>
+
+        <figure class="media-figure">
+          <img class="figure-frame" src="./static/images/arna-detailed.png" alt="ARNA detailed method overview">
+          <!-- <figcaption class="figure-caption">ARNA equips an LVLM-based agent with a library of perception, reasoning, and navigation tools from a modern robotic stack. The agent autonomously defines and executes task-specific workflows that iteratively query modules, reason over multimodal inputs, choose navigation actions, and update its memory to fulfill any provided task.</figcaption> -->
+        </figure>
+
+        <div class="content has-text-justified">
+
+          <p>Traditional robotic architectures rely on fixed workflows and handcrafted representations, limiting generalization to new tasks. LVLMs offer rich semantic and reasoning capabilities, but existing work constrains them to simplified integrations. ARNA embeds an LVLM agent into the robotic stack to enhance reasoning and enable generalization.</p>
+
+          <p><strong>Agentic LVLM core.</strong> The LVLM serves as a high-level controller that <em>plans</em>, <em>reasons</em>, and <em>acts</em> by orchestrating perception, reasoning, and navigation modules. It defines what to perceive, where to explore, and which hypotheses to test, adapting its workflow as new information is gathered.</p>
+          
+          <p><strong>Tool-based robotic interface.</strong> ARNA exposes the robot’s perception, reasoning, and navigation modules as callable tools. This design enables existing robotic stacks to be directly augmented with the LVLM’s reasoning and decision-making abilities, allowing the agent to invoke and combine tools dynamically during task execution.</p>
+          
+          <p><strong>Memory.</strong> A multimodal memory maintains a textual description of the environment, progress, and findings with references to 2D occupancy grids (see image below). This memory anchors reasoning, preserves continuity across steps, and provides spatial grounding for decision-making.</p>
+          
+          <p><strong>Task-specific workflow.</strong> The LVLM generates a workflow that includes objects of interest for open-set perception, termination conditions, a plan, and reasoning functions. The <em>plan</em> defines a structured sequence of exploration and navigation steps, while <em>reasoning functions</em> capture reusable logical relationships. Both are produced using a self-discover-inspired method (see image below).</p>
+          
+          <p><strong>Zero-shot generalization.</strong> ARNA generalizes across diverse tasks—including goal-based navigation, embodied question answering, text-based path following, and unconventional reasoning tasks—without any task-specific fine-tuning, relying solely on the pretrained LVLM’s semantic and spatial understanding.</p>    
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 6) Workflow & Memory image (super-tight) -->
+<section class="section image-section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-11-desktop is-12-tablet">
+        <figure class="media-figure">
+          <img class="figure-frame" src="./static/images/arna-workflow-memory-detail.png" alt="ARNA workflow generation and memory update">
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7) Results + 8) Stacked images + 9) Video + 10) Generalization + 11) Video -->
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Results heading + paragraph -->
+    <div class="columns is-centered">
+      <div class="column is-11-desktop is-12-tablet">
+        <h2 class="title is-3" id="results">Results</h2>
+        <div class="content has-text-justified">
+          <p><strong>EQA.</strong> Evaluated in Habitat Lab on the HM-EQA benchmark, ARNA achieved state-of-the-art accuracy and exploration efficiency, surpassing prior task-specific systems. The same system can be directly deployed on other benchmarks, such as RxR, which features long, descriptive navigation instructions and complex spatial reasoning. While ARNA generalizes effectively to this setting, RxR remains a challenging benchmark that underscores the need for continued advances in embodied reasoning and long-horizon planning.</p>
+        </div>
+      </div>
+    </div>
+    <!-- /Results heading + paragraph -->
+
+    <!-- EQA figure -->
+    <div class="columns is-centered tight">
+      <div class="column is-11-desktop is-12-tablet">
+        <figure class="media-figure">
+          <img class="figure-frame" src="./static/images/EQA.png" alt="HM-EQA quantitative results table">
+        </figure>
+      </div>
+    </div>
+
+      <!-- HM-EQA video -->
+      <div class="columns is-centered tight">
+        <div class="column is-11-desktop is-12-tablet has-text-centered">
+          <video controls muted playsinline width="100%">
+            <source src="./static/videos/hm-eqa-task.mp4" type="video/mp4">
+          </video>
+          <p class="has-text-centered" style="margin-top:.25rem;color:#6b7280;font-size:.95rem;">
+          </p>
+        </div>
+      </div>
+
+    <div class="columns is-centered">
+      <div class="column is-11-desktop is-12-tablet">
+        <div class="content has-text-justified">
+          <p><strong>RxR.</strong> The same system can be directly deployed on other benchmarks, such as RxR, which features long, descriptive navigation instructions and complex spatial reasoning. While ARNA generalizes effectively to this setting, RxR remains a challenging benchmark that underscores the need for continued advances in embodied reasoning and long-horizon planning.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RxR figure -->
+    <div class="columns is-centered tight">
+      <div class="column is-11-desktop is-12-tablet">
+        <figure class="media-figure">
+          <img class="figure-frame" src="./static/images/RxR.png" alt="RxR qualitative/quantitative examples">
+        </figure>
+      </div>
+    </div>
+
+    <!-- Generalization paragraph -->
+    <div class="columns is-centered">
+      <div class="column is-11-desktop is-12-tablet">
+        <div class="content has-text-justified">
+          <p><strong>Generalization.</strong> The same agent extends to many embodied tasks—<em>path following</em>, <em>goal-based navigation</em>, and open-ended behaviors such as <em>explore to describe the spatial layout</em>—without task-specific retraining. ARNA adapts its workflow and memory queries to the objective while reusing the common tool set.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other tasks video -->
+    <div class="columns is-centered tight">
+      <div class="column is-11-desktop is-12-tablet has-text-centered">
+        <video controls muted playsinline width="100%">
+          <source src="./static/videos/other_tasks.mp4" type="video/mp4">
+        </video>
+        <p class="has-text-centered" style="margin-top:.25rem;color:#6b7280;font-size:.95rem;">
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 12) Limitations (smaller margins) -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-11-desktop is-12-tablet">
+        <h2 class="title is-3" id="limits">Limitations</h2>
+        <div class="content has-text-justified">
+          <ul>
+              <li><strong>Computational cost.</strong> Frequent LVLM queries make ARNA resource-intensive, with long runtimes and higher per-task costs, limiting large-scale deployment.</li>
+              <li><strong>Prompt dependence.</strong> Without LVLM fine-tuning on robotics data, performance relies on carefully engineered prompts and can vary across backbones.</li>
+              <li><strong>Spatial reasoning limitations.</strong> Current LVLMs struggle with precise geometry, spatial consistency, and physical understanding, leading to occasional myopic decisions.</li>
+              <li><strong>Lack of dynamic re-planning.</strong> To limit token consumption, ARNA avoids full plan revision during execution, which can lead to reduced robustness in dynamic scenarios.</li>
+              <li><strong>Memory representation & verification.</strong> Inaccurate or insufficient expressivity can propagate through reasoning and degrade decisions.</li>
+              <li><strong>Integration simplicity.</strong> The current system uses relatively simple perception/mapping modules; integrating stronger components could further improve performance.</li>
+              <li><strong>Guardrail engineering.</strong> Reliable tool use demands careful interface and prompt design to prevent invalid calls, loops, or inconsistent behavior.</li>
+              <li><strong>Agent brittleness.</strong> The LVLM’s multi-step decisions can be fragile—small prompt changes or unexpected observations may derail intended reasoning/control.</li>
+              <li><strong>Model dependence.</strong> Only highly capable LVLMs consistently support ARNA’s workflows; smaller models often fail to maintain coherent, grounded reasoning.</li>
+          </ul>
+
+          <p>ARNA offers an alternative perspective on the robotic stack—moving beyond manually engineered pipelines and fully end-to-end learned systems toward a modular, reasoning-driven framework for general-purpose autonomy. Recent advances in fine-tuned LLMs and LVLMs for robotic and agentic applications further open promising avenues for improving how such systems are designed and for enhancing their reliability, efficiency, and overall performance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Single grey box with healthy margins (no white wrapper) -->
+<section id="BibTeX" style="padding:0;">
+  <div style="max-width: 960px; margin: 2rem auto 3rem;">
+    <div class="notification is-light" style="overflow:auto; margin:0; padding:1rem 1.25rem;">
+      <h2 class="title is-4" style="margin:0 0 0.5rem 0;">BibTeX</h2>
+      <pre style="margin:0;"><code>@article{lange2025arna,
+  title={General-Purpose Robotic Navigation via LVLM-Orchestrated Perception, Reasoning, and Acting},
+  author={Lange, Bernard and Yildiz, Anil and Arief, Mansur and Khattak, Shehryar and Kochenderfer, Mykel and Georgakis, Georgios},
+  journal={arXiv preprint arXiv:2506.17462},
+  year={2025}
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- Acknowledgments -->
+<section id="acknowledgments" style="padding:0;">
+  <div style="max-width: 960px; margin: 2rem auto 3rem;">
+    <h2 class="title is-4" style="margin:0 0 0.75rem 0;">Acknowledgments</h2>
+    <p style="margin:0 0 0.5rem 0;">This website template was adapted from <em><a href="https://nerfies.github.io" target="_blank">Nerfies</a></em>.</p>
+    <p style="margin:0;">
+      The research was carried out at the Jet Propulsion Laboratory, California Institute of Technology, under a contract
+      with the National Aeronautics and Space Administration (80NM0018D0004). ©2025. All rights reserved.
+    </p>
+  </div>
+</section>
+
+
+</body>
+</html>
